@@ -30,35 +30,29 @@ const TaskForm = ({ taskId, onTaskUpdated }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // title, description, category, email
-        //  
+        
         const taskData = {
             title,
             description,
             category,
             email: user?.email
         };
-        let data ;
+        console.log(taskData)
+  
 
-        try {
-            if (taskId) {
-               data= await axios.put(`https://taskmanagement-snowy.vercel.app/tasks/${taskId}`, taskData,{
-                withCredentials:true
-               });
-            } else {
-              data=  await axios.post('https://taskmanagement-snowy.vercel.app/tasks', taskData,{
-                withCredentials:true
-              });
-            }
+        try {           
+           let  data=  await axios.post('https://taskmanagement-snowy.vercel.app/tasks', taskData);
             toast.success("Task saved successfully")
             console.log(data)
         } catch (error) {
+            toast.error("Error adding  task")
             console.error('Error submitting task', error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg">
+        <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded-lg py-10 my-10">
+            <h1 className='capitalize font-semibold text-2xl my-1 text-center py-2'>Add your Task</h1>
             <div className="mb-4">
                 <label htmlFor="title" className="block text-sm font-semibold text-gray-700">Task Title</label>
                 <input
